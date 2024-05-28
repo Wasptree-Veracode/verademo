@@ -69,8 +69,31 @@ jobs:
           filepath: 'target/verademo.war'
           vid: '${{secrets.VID}}'
           vkey: '${{secrets.VKEY}}'
-          scantimeout: 30
-
+      
+  update_baseline:
+    name: Update Baseline File
+    runs-on: ubuntu-latest
+    needs: build_app
+    
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+    
+      - name: pipeline-scan action step
+        id: pipeline-scan
+        uses: veracode/Veracode-pipeline-scan-action@pipeline-scan-beta-v0.0.3
+        with:
+          vid: ${{ secrets.VID }}
+          vkey: ${{ secrets.VKEY }}
+          file: "./target/verademo.war"
+      
+      - name: Update Baseline File
+        uses: wasptree/veracode-autobaseline@v0.1b
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          update: true
+        
+  
   create_sbom:
     name: Generate SBOM file
     runs-on: ubuntu-latest
@@ -127,14 +150,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Verracode Container/IaC/Secrets action step
-        uses: veracode/container_iac_secrets_scanning@v1.0.0
+        uses: veracode/veracode-container-scanning-action@main
         with:
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
           command: "scan" 
           type: "directory"
           source: "./"
-          format: "json"
+          format: "table"
           debug: false
           fail_build: true
 
