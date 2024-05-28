@@ -81,11 +81,12 @@ jobs:
     
       - name: pipeline-scan action step
         id: pipeline-scan
-        uses: veracode/Veracode-pipeline-scan-action@pipeline-scan-beta-v0.0.3
+        uses: veracode/Veracode-pipeline-scan-action@pipeline-scan-beta-v1.0.15
         with:
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
           file: "./target/verademo.war"
+          json_output_file: 'baseline.json'
       
       - name: Update Baseline File
         uses: wasptree/veracode-autobaseline@master
