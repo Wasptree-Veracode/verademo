@@ -82,7 +82,7 @@ jobs:
     
       - name: pipeline-scan action step
         id: pipeline-scan
-        uses: veracode/Veracode-pipeline-scan-action-v1.0.15
+        uses: veracode/Veracode-pipeline-scan-action@v1.0.15
         with:
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
