@@ -36,7 +36,7 @@ jobs:
             vid: ${{ secrets.VID }}
             vkey: ${{ secrets.VKEY }}
             file: "./target/verademo.war"
-            baseline_file: "./veracode-autobaseline/baseline.json"
+            baseline_file: ".veracode-autobaseline/baseline.json"
         
         - name: update baseline
           uses: wasptree/veracode-autobaseline@master
