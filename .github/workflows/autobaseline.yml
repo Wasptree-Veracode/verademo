@@ -3,9 +3,7 @@ name: Autobaseline Test Workflow
 on:
   pull_request:
     branches: [ autobaseline ]
-  push:
-    branches: [ autobaseline ]
-
+    
 jobs:
 
   pipeline_scan:
