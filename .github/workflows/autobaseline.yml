@@ -42,4 +42,5 @@ jobs:
           uses: wasptree/veracode-autobaseline@master
           with:
             token: ${{ secrets.TOKEN }}
+            update: true
 
