@@ -23,24 +23,13 @@ jobs:
             echo "GITHUB_RUN_ID: ${{ github.run_id }}"
             echo "GITHUB_REF_NAME: ${{ github.ref_name }}"
         
-        - name: check baseline
-          uses: wasptree/veracode-autobaseline@master
-          with:
-            token: ${{ secrets.TOKEN }}
-
         # run the pipeline scan action
         - name: pipeline-scan action step
           id: pipeline-scan
-          uses: veracode/Veracode-pipeline-scan-action@v1.0.15
+          uses: wasptree/veracode-autobaseline-pipeline@master
           with:
             vid: ${{ secrets.VID }}
             vkey: ${{ secrets.VKEY }}
             file: "./target/verademo.war"
             baseline_file: ".veracode-autobaseline/baseline.json"
-        
-        - name: update baseline
-          uses: wasptree/veracode-autobaseline@master
-          with:
-            token: ${{ secrets.TOKEN }}
-            update: true
-
+            baseline_token: ${{ secrets.TOKEN }}
