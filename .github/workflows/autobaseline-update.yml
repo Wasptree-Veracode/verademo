@@ -21,6 +21,7 @@ jobs:
             filepath: 'target/verademo.war'
             vid: '${{secrets.VID}}'
             vkey: '${{secrets.VKEY}}'
+            deleteincompletescan: 2
 
   update-baseline:
       name: Update Baseline
