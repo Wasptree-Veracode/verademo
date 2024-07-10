@@ -1,0 +1,43 @@
+name: Autobaseline Test Workflow
+
+on:
+  pull_request:
+    branches: [ autobaseline-update ]
+    
+jobs:
+  policy-scan:
+      name: Veracode Policy Scan
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: checkout repo
+          uses: actions/checkout@v2
+          
+        - name: Veracode Upload And Scan
+          uses: veracode/veracode-uploadandscan-action@0.2.1
+          with:
+            appname: 'verademo_github'
+            createprofile: false
+            filepath: 'target/verademo.war'
+            vid: '${{secrets.VID}}'
+            vkey: '${{secrets.VKEY}}'
+
+  update-baseline:
+      name: Update Baseline
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: checkout repo
+          uses: actions/checkout@v2
+        
+        # run the pipeline scan action
+        - name: pipeline-scan action step
+          id: pipeline-scan
+          uses: wasptree/veracode-autobaseline-pipeline@master
+          with:
+            vid: ${{ secrets.VID }}
+            vkey: ${{ secrets.VKEY }}
+            file: "./target/verademo.war"
+            baseline_file: ".veracode-autobaseline/baseline.json"
+            baseline_token: ${{ secrets.TOKEN }}
+            update: true
