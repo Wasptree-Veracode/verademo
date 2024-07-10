@@ -1,7 +1,7 @@
 name: Autobaseline Test Workflow
 
 on:
-  pull_request:
+  push:
     branches: [ autobaseline-update ]
     
 jobs:
